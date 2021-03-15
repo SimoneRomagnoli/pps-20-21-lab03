@@ -1,6 +1,8 @@
 package homework
 
 import u03.Lists.List._
+import u02.Optionals._
+import u02.Optionals.Option._
 
 object ExtendedLists {
   import u03.Lists._
@@ -25,5 +27,13 @@ object ExtendedLists {
     case elem if pred(elem) => Cons(elem, Nil())
     case _ => Nil()
   })
+
+  def max(l: List[Int]): Option[Int] = l match {
+    case Cons(h, t) => t match {
+      case Cons(_, _) => max(filter(t)(_>h))
+      case Nil() => Some(h)
+    }
+    case _ => None()
+  }
 
 }

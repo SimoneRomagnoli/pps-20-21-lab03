@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import u03.Lists.List.Nil
 import u03.Lists.List.Cons
+import u02.Optionals.Option.Some
+import u02.Optionals.Option.None
 
 class TestExtendedLists {
 
@@ -46,5 +48,13 @@ class TestExtendedLists {
       filter(lst)(_%10 == 0))
   }
 
+  @Test
+  def maxTest: Unit = {
+    assertEquals(Some(30),
+      max(lst))
+
+    assertEquals(None(),
+      max(Nil()))
+  }
 
 }
