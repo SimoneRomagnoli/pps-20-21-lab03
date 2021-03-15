@@ -16,5 +16,14 @@ object ExtendedLists {
     case _ => Nil()
   }
 
+  @Override
+  def map[A,B](l: List[A])(mapper: A=>B): List[B] =
+    flatMap(l)(elem => Cons(mapper(elem), Nil()))
+
+  @Override
+  def filter[A](l1: List[A])(pred: A=>Boolean): List[A] = flatMap(l1)({
+    case elem if pred(elem) => Cons(elem, Nil())
+    case _ => Nil()
+  })
 
 }
