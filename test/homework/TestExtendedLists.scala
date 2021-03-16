@@ -3,14 +3,26 @@ package homework
 import homework.ExtendedLists._
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import u03.Lists.List
 import u03.Lists.List.Nil
 import u03.Lists.List.Cons
 import u02.Optionals.Option.Some
 import u02.Optionals.Option.None
+import u02.SumTypes.{Person, Student, Teacher}
 
 class TestExtendedLists {
 
+  val list = Cons(3, Cons(7, Cons(1, Cons(5, Nil()))))
+
   val lst = Cons(10, Cons(20, Cons(30, Nil())))
+  val sum = 60
+  val diff = -60
+  val diffRight = 20
+
+  val people: List[Person] = Cons(Student("mario", 2021), Cons(Teacher("viroli", "fisica"), Cons(Teacher("yoshi","chimica"),Nil())))
+  val courses = Cons("fisica", Cons("chimica", Nil()))
+
+  val bools = Cons(true, Cons(true, Cons(false, Nil())))
 
   @Test
   def dropTest: Unit = {
@@ -56,5 +68,37 @@ class TestExtendedLists {
     assertEquals(None(),
       max(Nil()))
   }
+
+
+  @Test
+  def coursesTest: Unit = {
+    assertEquals(courses,
+      getCourses(people))
+
+    assertEquals(courses,
+      getCoursesWithFlatMap(people))
+  }
+
+  @Test
+  def foldLeftTest: Unit = {
+    assertEquals(-16, foldLeft(list)(0)(_-_))
+
+
+    assertEquals(sum, foldLeft(lst)(0)(_+_))
+    assertEquals(diff, foldLeft(lst)(0)(_-_))
+    assertEquals(true, foldLeft(bools)(false)(_||_))
+    assertEquals(false, foldLeft(bools)(true)(_&&_))
+  }
+
+  @Test
+  def foldRightTest: Unit = {
+    assertEquals(-8, foldRight(list)(0)(_-_))
+
+    assertEquals(sum, foldRight(lst)(0)(_+_))
+    assertEquals(diffRight, foldRight(lst)(0)(_-_))
+    assertEquals(true, foldRight(bools)(false)(_||_))
+    assertEquals(false, foldRight(bools)(true)(_&&_))
+  }
+
 
 }

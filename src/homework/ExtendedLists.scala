@@ -3,6 +3,9 @@ package homework
 import u03.Lists.List._
 import u02.Optionals._
 import u02.Optionals.Option._
+import u02.SumTypes.{Person, Student, Teacher}
+
+import scala.annotation.tailrec
 
 object ExtendedLists {
   import u03.Lists._
@@ -34,6 +37,26 @@ object ExtendedLists {
       case Nil() => Some(h)
     }
     case _ => None()
+  }
+
+  def getCourses(l:List[Person]): List[String] = map(filter(l)(p => p.isInstanceOf[Teacher])) {
+    case Teacher(_, c) => c
+  }
+
+  def getCoursesWithFlatMap(l:List[Person]): List[String] = flatMap(l){
+    case Teacher(_, course) => Cons(course, Nil())
+    case _ => Nil()
+  }
+
+  @tailrec
+  def foldLeft[A,B](l:List[A])(initialValue:B)(op: (B,A)=>B):B = l match {
+    case Cons(h,t) => foldLeft(t)(op(initialValue, h))(op)
+    case Nil() => initialValue
+  }
+
+  def foldRight[A,B](l:List[A])(initialValue:B)(op: (A,B)=>B):B = l match {
+    case Cons(h,t) => op(h, foldRight(t)(initialValue)(op))
+    case Nil() => initialValue
   }
 
 }
