@@ -13,6 +13,6 @@ object ExtendedStreams {
     case _ => empty()
   }
 
-  
+  def constant[A](init: A): Stream[A] = Stream.iterate(init)(elem=>elem)
 
 }
